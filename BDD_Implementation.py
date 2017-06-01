@@ -1,5 +1,43 @@
 import numpy as np
 
+
+
+"""
+
+Author:
+Description:
+0. Definitions:
+
+    node: represents the most basic unit of the TDD with following def
+
+        select_line
+        left_branch
+        right_branch
+        left_value
+        right_value
+
+
+1. BDD_Implementation: Takes in a truth table of the form 3x3 and returns all possible
+combinations of last node (smaller 2x2 matrices) in a complete TDD.
+
+     Eg:
+     Truth Table
+       0  1  2
+    ------------                 
+    0| 2  1  0
+    1| 1  2  1
+    2| 0  2  1
+
+    Below is one of the 8 smaller sub divisions of the above truth table towards the end of TDD
+       0  1  2
+    ------------
+    0| 2  1  
+    1| 1  2
+
+2. stage_1_2_BDD_Implementation
+
+"""
+
 class node:
     def __init__(self,select_line,left_branch,right_branch,left_value,right_value):
         self.select_line = select_line
@@ -260,6 +298,16 @@ for i in np.arange(len(out)):
     print out[i].left_value
     print out[i].right_value
     print '-----------------'
+
+
+print '-----------------'
+print '--------3---------'
+print out[3].select_line
+print out[3].left_branch
+print out[3].right_branch
+print out[3].left_value
+print out[3].right_value
+print '-----------------'
 
 (out1,out2,auxi) = stage_1_2_BDD_Implementation(out[3],truth_table)
 out3 =out[3]
