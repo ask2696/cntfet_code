@@ -1,31 +1,16 @@
-from Template_BDD import Template_BDD,node
+#from Template_BDD import Template_BDD
 import numpy as np
 from Mappings import *
 
+"""
+Author:
 
-def remnant(inp_tup):
+Description:
 
-    if inp_tup == (0):
-        return (1,2)
-    elif inp_tup == (1):
-        return (0,2)
-    elif inp_tup == (2):
-        return (0,1)
+1. decision_template:
     
-def PTI_logic(inp_1):
+"""
 
-    out = {(0):(2),(1):(2),(2):(0),(0,1,2):(2,2,0)}
-    return out.get(inp_1)
-
-def NTI_logic(inp_1):
-
-    out = {(0):(2),(1):(0),(2):(0),(0,1,2):(0,0,2)}
-    return out.get(inp_1)
-
-def INV_logic(inp_1):
-
-    out = {(0):(2),(2):(0)}
-    return out.get(inp_1)
     
 def decision_template(truth_table):
     
@@ -41,11 +26,26 @@ def decision_template(truth_table):
     cols =np.array([col_0,col_1,col_2])
     #print rows    
     #print cols
+
+    # Case 2
+    # Second Stage in Algo??
+    # Reduction from 2 muxes to 1 mux
+    # row/column_"2" indicates the complexity of order 2
+    # (0=True,row_number in tt 1 = a)PTI 2 = b)NTI )
+    # a)
+    # b)
     
-                        # (0=True,row_number in tt 1 = PTI 2 =NTI ) # Reduction from 2 muxes to 1 mux
     row_2mux = {0:np.array([False,None,None]),1:np.array([False,None,None]),2:np.array([False,None,None])}
     col_2mux = {0:np.array([False,None,None]),1:np.array([False,None,None]),2:np.array([False,None,None])}
-                        # PTI no 0,1    NTI no 0,1  # Reduction from 1 muxes to 0 mux thru nti or pti
+
+    # Case 1
+    # First Stage in Algo??
+    # Reduction from 1 muxes to 0 mux thru nti or pti
+    # row/column_"2" indicates the complexity of order 2
+    # PTI no 0,1    NTI no 0,1  Indices of the dict correspond to row numbers 
+    # The first two entries of the array gives the position of the rows that are PTI of the dict index row
+    # The second two entries of the array gives the position of the rows that are NTI of the dict index row
+    
     row_PN = {0:np.array([None,None,None,None]),1:np.array([None,None,None,None]),2:np.array([None,None,None,None])}
     col_PN = {0:np.array([None,None,None,None]),1:np.array([None,None,None,None]),2:np.array([None,None,None,None])}
 
@@ -54,15 +54,23 @@ def decision_template(truth_table):
 
     new_mapping_row_case2 ={0:np.array([False,None]),1:np.array([False,None]),2:np.array([False,None])}
     new_mapping_col_case2 ={0:np.array([False,None]),1:np.array([False,None]),2:np.array([False,None])}
-    
+
+    ###
     #Need to implement for combinations of PTI.NTI,INV
+    ###
+    
+    # To compute the final costs for each row and col
     
     cost_row =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
     cost_col =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
-
+    
+    # To compute the initial cost for each row and col
+    
     cost_row_init =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
     cost_col_init =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
-    
+
+    #Initial Cost Analysis
+    #Retrieve costs from the Mappings combinations_3_3
     for i in np.arange(3):
         
         for j in np.arange(27):
@@ -72,9 +80,12 @@ def decision_template(truth_table):
                     if (cols[i] == combinations_3_3[j]['Output']).all():
                         cost_col_init[i] =combinations_3_3[j]['Implementation']
 
+    
     for i in np.arange(3):
-
-        for k in np.arange(2): # NTI or PTI of the given row gives another row for case 1
+        
+        # NTI or PTI of the current/given row (ith row) gives another row (jth row) for case 1
+        # 
+        for k in np.arange(2): 
 
             row_NTI =np.array([NTI_logic(rows[i][0]),NTI_logic(rows[i][1]),NTI_logic(rows[i][2])])
             row_PTI =np.array([PTI_logic(rows[i][0]),PTI_logic(rows[i][1]),PTI_logic(rows[i][2])])
@@ -100,8 +111,10 @@ def decision_template(truth_table):
                row_PN[i][3] = rows_check[1]
                new_mapping_row_case1[rows_check[1]][0] = True
                new_mapping_row_case1[rows_check[1]][1] = "NTI(ROW"+str(i)+")" 
-               
-        for j in np.arange(len(mux_2_1_red)): # PTI reduction or NTI reduction from an extra mux to use the existing logic from the truth table
+
+        # Complexity Degree 2 Case
+        # PTI reduction or NTI reduction from an extra mux to use the existing logic from the truth table       
+        for j in np.arange(len(mux_2_1_red)): 
 
             if (rows[i] == mux_2_1_red[j]['Output']).all():
                 
@@ -109,10 +122,16 @@ def decision_template(truth_table):
                 row_2mux[i][0] = True
                 #print "*"
 
+                #  PTI Transformation
+                # (0,1,2) -> (a,b,c); A PTI mux gives us flexibility in c i.e it isolates c
+                #  PTI_map1 and PTI_map2 correspond to remaining values other than c
                 PTI_out = remnant(rows[i][2])
                 PTI_map1 =np.array([rows[i][0],rows[i][1],PTI_out[0]])
                 PTI_map2 = np.array([rows[i][0],rows[i][1],PTI_out[1]])
 
+                #  NTI Transformation
+                # (0,1,2) -> (a,b,c); A NTI mux gives us flexibility in a i.e it isolates a
+                #  NTI_map1 and NTI_map2 correspond to remaining values other than a
                 NTI_out = remnant(rows[i][0])
                 NTI_map1 = np.array([NTI_out[0],rows[i][1],rows[i][2]])
                 NTI_map2 = np.array([NTI_out[1],rows[i][1],rows[i][2]])
@@ -168,7 +187,7 @@ def decision_template(truth_table):
             cost_row[i] = cost_row_init[i]
             
                     
-
+    # Do the above operations for the columns as well
     for i in np.arange(3):
 
         for k in np.arange(2):

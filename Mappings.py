@@ -101,6 +101,7 @@ combinations_2_2 = np.array([{'Mapping':(0,0),'Output':(0,0),'Implementation':(0
                              {'Mapping':(0,0),'Output':(0,0),'Implementation':(0,0,0,0)}])
 """
 
+# Isolates the cases of 2 deg complexity and the NTI and PTI flexibity opportunities
 
 mux_2_1_red =np.array([{'Output':(2,1,0),0:(2,1,1),1:(2,1,2),2:(0,1,0),3:(1,1,0)},
                    {'Output':(1,0,1),0:(1,0,2),1:(1,0,0),2:(0,0,1),3:(2,0,1)},
