@@ -1,6 +1,13 @@
 import numpy as np
 from Mappings import combinations_3_3
 
+"""
+Author:
+
+Description:
+
+"""
+
 class node:
     def __init__(self,select_line,left_branch,right_branch,left_value,right_value):
         self.select_line = select_line

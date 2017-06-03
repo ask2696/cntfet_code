@@ -2,6 +2,14 @@ import numpy as np
 from Template_Decision import decision_template
 from Mappings import node
 
+
+"""
+Author:
+
+Description:
+
+"""
+
 def mux_translate(stage_num,left_branch,path,select_line,_I0,_I2):
     if left_branch == "0":
         ans = "NTI"

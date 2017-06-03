@@ -1,6 +1,35 @@
 import numpy as np
 import copy
 
+"""
+Author:
+
+Description:
+1. node: represents the most basic unit of the TDD with following def
+
+        select_line
+        left_branch
+        right_branch
+        left_value
+        right_value
+        
+2. remnant: takes the input of a either 0,1 or 2 and returns the remaining tuple from {0,1,2}
+            For eg: Input of 0 gives (1,2)
+
+3. PTI_logic: returns the PTI output of the input
+
+4. NTI_logic: returns the NTI output of the input
+
+5. INV_logic: returns the Binary Inverter output of the input.
+
+6. combinations_3_3: An array of dictionaries with the dictionary structure as follows:
+                    {'Output':       ,'Implementation':      ,'BDD':   }
+                    Output represents the tuple that is expected when (0,1,2) is the input
+                    Implementation gives the implementation cost in terms of a tuple (Mux,PTI,NTI,B_INV)
+                    BDD/TDD : gives the TDD structure for the mapping
+    
+        
+"""
 
 class node:
     def __init__(self,select_line,left_branch,right_branch,left_value,right_value):
@@ -9,6 +38,31 @@ class node:
         self.right_branch = right_branch
         self.left_value = left_value
         self.right_value = right_value
+
+
+def remnant(inp_tup):
+
+    if inp_tup == (0):
+        return (1,2)
+    elif inp_tup == (1):
+        return (0,2)
+    elif inp_tup == (2):
+        return (0,1)
+    
+def PTI_logic(inp_1):
+
+    out = {(0):(2),(1):(2),(2):(0),(0,1,2):(2,2,0)}
+    return out.get(inp_1)
+
+def NTI_logic(inp_1):
+
+    out = {(0):(2),(1):(0),(2):(0),(0,1,2):(0,0,2)}
+    return out.get(inp_1)
+
+def INV_logic(inp_1):
+
+    out = {(0):(2),(2):(0)}
+    return out.get(inp_1)
 
 
 #                          Output paralell to (0,1,2) Cost behaviour (Mux,PTI,NTI,B_INV)
@@ -42,9 +96,10 @@ combinations_3_3 = np.array([{'Output':(0,0,0),'Implementation':(0,0,0,0),'BDD':
 
 
 #                    Output paralell to (x,y)    Ouput (x',y')    Cost behaviour (Mux,PTI,NTI,B_INV)
+"""
 combinations_2_2 = np.array([{'Mapping':(0,0),'Output':(0,0),'Implementation':(0,0,0,0)},
                              {'Mapping':(0,0),'Output':(0,0),'Implementation':(0,0,0,0)}])
-
+"""
 
 
 mux_2_1_red =np.array([{'Output':(2,1,0),0:(2,1,1),1:(2,1,2),2:(0,1,0),3:(1,1,0)},

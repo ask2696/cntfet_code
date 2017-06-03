@@ -2,6 +2,13 @@ from Template_BDD import Template_BDD
 import numpy as np
 from Mappings import *
 
+"""
+Author:
+
+Description:
+
+"""
+
 def decision_Template(truth_table):
     
     row_0 = (truth_table[0,0],truth_table[0,1],truth_table[0,2]) 

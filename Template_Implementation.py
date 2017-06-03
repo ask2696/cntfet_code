@@ -1,5 +1,11 @@
 import numpy as np
 
+"""
+Author:
+
+Description:
+
+"""
         
 #                          Output paralell to (0,1,2) Cost behaviour (Mux,PTI,NTI,B_INV)
 combinations = np.array([{'Output':(0,0,0),'Implementation':(0,0,0,0)},
