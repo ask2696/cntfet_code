@@ -1,6 +1,6 @@
 #from Template_BDD import Template_BDD
 import numpy as np
-from libraries_btTDD import *
+from Mappings import *
 
 """
 Author:
@@ -60,7 +60,6 @@ def decision_template(truth_table):
     ######################################################
     
     # To compute the final costs for each row and col
-    #(Mux,PTI,NTI,B_INV)
     
     cost_row =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
     cost_col =np.array([(0,0,0,0),(0,0,0,0),(0,0,0,0)])
@@ -345,7 +344,7 @@ def decision_template(truth_table):
 
     #print row_PN
     #print col_PN
-    print "Cost Vectors (Mux,PTI,NTI,B_INV)"
+
     for i in np.arange(3):
 
         print "Row %d" %(i)
@@ -358,29 +357,15 @@ def decision_template(truth_table):
     total_column_cost = (sum(cost_col[:,0]),sum(cost_col[:,1]),sum(cost_col[:,2]),sum(cost_col[:,3]))
     total_row_cost = (sum(cost_row[:,0]),sum(cost_row[:,1]),sum(cost_row[:,2]),sum(cost_row[:,3]))
 
-    print "Total Row Cost"
     print total_row_cost
-    print "Total Column Cost"
     print total_column_cost
-
-    ###### Transistor Count Computation ######
-
-    tc_total_row_cost = 6 * total_row_cost[0] + 2 * total_row_cost[1] + 2 * total_row_cost[2] + 2 * total_row_cost[3] 
-    tc_total_col_cost =  6 * total_column_cost[0] + 2 * total_column_cost[1] + 2 * total_column_cost[2] + 2 * total_column_cost[3]
-
+    
     ###### Flowgraph Contruction #######
     stage_2_left_value = {}
     stage_1_left_value = {}
     stage_1_right_value = {}
     stage_2_right_value = {}
     fg_stages = 0
-
-    #                  (PMUX,NMUX,PTI,NTI)
-    A_reductions_row = (0,0,0,0)
-    B_reductions_row = (0,0,0,0)
-
-    A_reductions_col = (0,0,0,0)
-    B_reductions_col = (0,0,0,0)
 
     if(total_row_cost[0] <= total_column_cost[0]):
 
@@ -398,7 +383,6 @@ def decision_template(truth_table):
         print equal_row
         if(equal_row[(0,1,2)]== True):
             final_out = combinations_3_3_bdd(row_2,'B')
-            
             
         elif(equal_row[(0,1)]== True):#PTI #combinations_3_3_bdd(inp,sl)
             stage_1_left_branch = (2)
@@ -577,8 +561,6 @@ def decision_template(truth_table):
 #truth_table = np.array([[0,1,1],[0,1,1],[0,1,1]])
 truth_table = np.array([[0,1,2],[1,2,0],[2,0,1]]) #HA
 
-#truth_table = np.array([[0,1,2],[0,1,2],[0,1,2]])
-
 print "Truth Table"
 print "   0  1  2"
 print "------------"
@@ -587,56 +569,6 @@ print "1| %d  %d  %d" %(truth_table[1,0],truth_table[1,1],truth_table[1,2])
 print "2| %d  %d  %d\n" %(truth_table[2,0],truth_table[2,1],truth_table[2,2])
 
 out,nos = decision_template(truth_table)
-
-"""
-try:
-    print "                         ",out.select_line,"               "
-    print "                ",out.left_branch,"    ",out.right_branch,"       "
-    if(str(type(out.left_value)) == "<type 'instance'>"):
-        print "      ",out.left_value.select_line,"    "
-        print "   ",out.left_value.left_branch,"     ",out.left_value.right_branch
-        if str(type(out.left_value.right_value)) == "<type 'instance'>":
-            print "  ",out.left_value.left_value," ",out.left_value.right_value.select_line
-            print "                  #",out.left_value.right_value.left_branch,"    ",out.left_value.right_value.right_branch
-            print "                               ",out.left_value.right_value.left_value,"     ",out.left_value.right_value.right_value
-        else:
-            print "",out.left_value.left_value,"          ",out.left_value.right_value
-    else:
-        print "  ",out.left_value
-
-    #print out.right_value
-
-    if(str(type(out.right_value)) == "<type 'instance'>"):
-        print "                                 ",out.right_value.select_line,"    "
-        print "                        ",out.right_value.left_branch,"     ",out.right_value.right_branch
-
-        if(str(type(out.right_value.left_value)) == "<type 'instance'>"):
-            print "            ",out.right_value.left_value.select_line,"                                          "
-            print "          ",out.right_value.left_value.left_branch,"    ",out.right_value.left_value.right_branch
-            print "        ",out.right_value.left_value.left_value,"             ",out.right_value.left_value.right_value
-            
-        else:
-            print "       ",out.right_value.left_value
-            
-        if str(type(out.right_value.right_value)) == "<type 'instance'>":
-            print "                                                           ",out.right_value.right_value.select_line
-            print "                                                  ",out.right_value.right_value.left_branch,"    ",out.right_value.right_value.right_branch
-            print "                                                ",out.right_value.right_value.left_value,"     ",out.right_value.right_value.right_value
-        else:
-            print "                                              ",out.right_value.right_value
-            
-        
-    else:
-        print "                                    ",out.right_value
-
-except:
-    print out
-     
-"""
-
-
-
-
 """
 if nos==2:
     #print '--------Stage 1---------'
@@ -730,3 +662,44 @@ else:
 
 """
 #print out.left_value.right_value
+print "                         ",out.select_line,"               "
+print "                ",out.left_branch,"    ",out.right_branch,"       "
+if(str(type(out.left_value)) == "<type 'instance'>"):
+    print "      ",out.left_value.select_line,"    "
+    print "   ",out.left_value.left_branch,"     ",out.left_value.right_branch
+    if str(type(out.left_value.right_value)) == "<type 'instance'>":
+        print "  ",out.left_value.left_value," ",out.left_value.right_value.select_line
+        print "                  #",out.left_value.right_value.left_branch,"    ",out.left_value.right_value.right_branch
+        print "                               ",out.left_value.right_value.left_value,"     ",out.left_value.right_value.right_value
+    else:
+        print "",out.left_value.left_value,"          ",out.left_value.right_value
+else:
+    print "  ",out.left_value
+
+#print out.right_value
+
+if(str(type(out.right_value)) == "<type 'instance'>"):
+    print "                                 ",out.right_value.select_line,"    "
+    print "                        ",out.right_value.left_branch,"     ",out.right_value.right_branch
+
+    if(str(type(out.right_value.left_value)) == "<type 'instance'>"):
+        print "            ",out.right_value.left_value.select_line,"                                          "
+        print "          ",out.right_value.left_value.left_branch,"    ",out.right_value.left_value.right_branch
+        print "        ",out.right_value.left_value.left_value,"             ",out.right_value.left_value.right_value
+        
+    else:
+        print "       ",out.right_value.left_value
+        
+    if str(type(out.right_value.right_value)) == "<type 'instance'>":
+        print "                                                           ",out.right_value.right_value.select_line
+        print "                                                  ",out.right_value.right_value.left_branch,"    ",out.right_value.right_value.right_branch
+        print "                                                ",out.right_value.right_value.left_value,"     ",out.right_value.right_value.right_value
+    else:
+        print "                                              ",out.right_value.right_value
+        
+    
+else:
+    print "                                    ",out.right_value
+     
+
+ 

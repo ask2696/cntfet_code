@@ -186,47 +186,156 @@ def print_combinations_3_3_bdd(inp,sl):
 def print_btTDD(node_graph):
 
     try:
-        print "                         ",out.select_line,"               "
-        print "                ",out.left_branch,"    ",out.right_branch,"       "
-        if(str(type(out.left_value)) == "<type 'instance'>"):
-            print "      ",out.left_value.select_line,"    "
-            print "   ",out.left_value.left_branch,"     ",out.left_value.right_branch
-            if str(type(out.left_value.right_value)) == "<type 'instance'>":
-                print "  ",out.left_value.left_value," ",out.left_value.right_value.select_line
-                print "                  #",out.left_value.right_value.left_branch,"    ",out.left_value.right_value.right_branch
-                print "                               ",out.left_value.right_value.left_value,"     ",out.left_value.right_value.right_value
+        print "                         ",node_graph.select_line,"               "
+        print "                ",node_graph.left_branch,"    ",node_graph.right_branch,"       "
+        if(str(type(node_graph.left_value)) == "<type 'instance'>"):
+            print "      ",node_graph.left_value.select_line,"    "
+            print "   ",node_graph.left_value.left_branch,"     ",node_graph.left_value.right_branch
+            if str(type(node_graph.left_value.right_value)) == "<type 'instance'>":
+                print "  ",node_graph.left_value.left_value," ",node_graph.left_value.right_value.select_line
+                print "                  #",node_graph.left_value.right_value.left_branch,"    ",node_graph.left_value.right_value.right_branch
+                print "                               ",node_graph.left_value.right_value.left_value,"     ",node_graph.left_value.right_value.right_value
             else:
-                print "",out.left_value.left_value,"          ",out.left_value.right_value
+                print "",node_graph.left_value.left_value,"          ",node_graph.left_value.right_value
         else:
-            print "  ",out.left_value
+            print "  ",node_graph.left_value
 
-        #print out.right_value
+        #print node_graph.right_value
 
-        if(str(type(out.right_value)) == "<type 'instance'>"):
-            print "                                 ",out.right_value.select_line,"    "
-            print "                        ",out.right_value.left_branch,"     ",out.right_value.right_branch
+        if(str(type(node_graph.right_value)) == "<type 'instance'>"):
+            print "                                 ",node_graph.right_value.select_line,"    "
+            print "                        ",node_graph.right_value.left_branch,"     ",node_graph.right_value.right_branch
 
-            if(str(type(out.right_value.left_value)) == "<type 'instance'>"):
-                print "            ",out.right_value.left_value.select_line,"                                          "
-                print "          ",out.right_value.left_value.left_branch,"    ",out.right_value.left_value.right_branch
-                print "        ",out.right_value.left_value.left_value,"             ",out.right_value.left_value.right_value
+            if(str(type(node_graph.right_value.left_value)) == "<type 'instance'>"):
+                print "            ",node_graph.right_value.left_value.select_line,"                                          "
+                print "          ",node_graph.right_value.left_value.left_branch,"    ",node_graph.right_value.left_value.right_branch
+                print "        ",node_graph.right_value.left_value.left_value,"             ",node_graph.right_value.left_value.right_value
                 
             else:
-                print "       ",out.right_value.left_value
+                print "       ",node_graph.right_value.left_value
                 
-            if str(type(out.right_value.right_value)) == "<type 'instance'>":
-                print "                                                           ",out.right_value.right_value.select_line
-                print "                                                  ",out.right_value.right_value.left_branch,"    ",out.right_value.right_value.right_branch
-                print "                                                ",out.right_value.right_value.left_value,"     ",out.right_value.right_value.right_value
+            if str(type(node_graph.right_value.right_value)) == "<type 'instance'>":
+                print "                                                           ",node_graph.right_value.right_value.select_line
+                print "                                                  ",node_graph.right_value.right_value.left_branch,"    ",node_graph.right_value.right_value.right_branch
+                print "                                                ",node_graph.right_value.right_value.left_value,"     ",node_graph.right_value.right_value.right_value
             else:
-                print "                                              ",out.right_value.right_value
+                print "                                              ",node_graph.right_value.right_value
                 
             
         else:
-            print "                                    ",out.right_value
+            print "                                    ",node_graph.right_value
 
     except:
-        print out
+        print node_graph
+
+
+def is_instance(sub_node,cost_matrix):
+
+    if sub_node.select_line == 'A':
+        i_cost_matrix = 0
+        #print "#"
+    elif sub_node.select_line == 'B':
+        i_cost_matrix = 1
+        #print "$"
+
+    if sub_node.left_branch == (0):#NTI
+        cost_matrix[i_cost_matrix][0] = cost_matrix[i_cost_matrix][0] + 1
+        cost_matrix[i_cost_matrix][2] = cost_matrix[i_cost_matrix][2] + 1
+
+    elif sub_node.left_branch == (2):#PTI
+        cost_matrix[i_cost_matrix][1] = cost_matrix[i_cost_matrix][1] + 1
+        cost_matrix[i_cost_matrix][3] = cost_matrix[i_cost_matrix][3] + 1
+
+    return cost_matrix
+
+
+
+def is_string(str_inp,cost_matrix):
+
+    if str_inp.find('A') > 0:
+        i_cost_matrix= 0
+        #print "#"
+    elif str_inp.find('B') >0:
+        i_cost_matrix= 1
+        #print "$"
+
+    if str_inp.find('NTI'):
+        cost_matrix[i_cost_matrix][2] = cost_matrix[i_cost_matrix][2]+1
+    elif str_inp.find('PTI'):
+        cost_matrix[i_cost_matrix][3] = cost_matrix[i_cost_matrix][3]+1
+    elif str_inp.find('INV'):
+        cost_matrix[i_cost_matrix][4] = cost_matrix[i_cost_matrix][4]+1
+    
+    return cost_matrix
+
+def node_recursive(node_element,cost_matrix):
+
+    if str(type(node_element.left_value)) == "<type 'instance'>":
+        cost_matrix = is_instance(node_element.left_value,cost_matrix)
+        cost_matrix = node_recursive(node_element.left_value,cost_matrix)
+
+    elif str(type(node_element.left_value)) == "<type 'str'>":
+        cost_matrix = is_string(node_element.left_value,cost_matrix) 
+
+    if str(type(node_element.right_value)) == "<type 'instance'>":
+        cost_matrix = is_instance(node_element.right_value,cost_matrix)
+        cost_matrix = node_recursive(node_element.right_value,cost_matrix)
+
+    elif str(type(node_element.right_value)) == "<type 'str'>":
+        cost_matrix = is_string(node_element.right_value,cost_matrix)
+
+    return cost_matrix
+
+
+def transistor_count(node_graph):
+
+            #Acc to tex section, (NTI_Mux,PTI_Mux,NTI,PTI,B_INV)
+    cost_vector = [0,0,0,0,0]
+
+    cost_vector_A = [0,0,0,0,0]
+    cost_vector_B = [0,0,0,0,0]
+
+    cost_table = [[0,0,0,0,0],[0,0,0,0,0]] 
+    
+    trans_count_val = [0,0,0,0,0]
+    total_transistor_count = 0
+
+    if str(type(node_graph)) == "<type 'str'>" or str(type(node_graph)) == "<type 'int'>":
+        cost_table = is_string(node_graph,cost_table)
+
+    elif str(type(node_graph)) == "<type 'instance'>":
+
+        cost_table = is_instance(node_graph,cost_table)
+        #print cost_table
+
+        cost_table = node_recursive(node_graph,cost_table)
+
+        """
+        if node_graph.select_line == 'A':
+            if node_graph.left_branch == 0:
+                cost_vector_A[0] = cost_vector_A[0]+1
+                cost_vector_A[2] = cost_vector_A[2]+1 
+            elif node_graph.left_branch == 2:
+                cost_vector_A[1] = cost_vector_A[1]+1
+                cost_vector_A[3] = cost_vector_A[3]+1
+        """        
+        """
+            if str(type(node_graph.left_value)) == "<type 'str'>":
+                if str(type(node_graph.left_value)) == 'PTI(B)':
+        """
+         
+    
+
+    return cost_table
+        
+
+
+
+
+
+
+
+
 
 
 #print type(str())

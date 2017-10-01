@@ -183,52 +183,6 @@ def print_combinations_3_3_bdd(inp,sl):
                         out =''.join(new)
                         #print out,sl
 
-def print_btTDD(node_graph):
-
-    try:
-        print "                         ",out.select_line,"               "
-        print "                ",out.left_branch,"    ",out.right_branch,"       "
-        if(str(type(out.left_value)) == "<type 'instance'>"):
-            print "      ",out.left_value.select_line,"    "
-            print "   ",out.left_value.left_branch,"     ",out.left_value.right_branch
-            if str(type(out.left_value.right_value)) == "<type 'instance'>":
-                print "  ",out.left_value.left_value," ",out.left_value.right_value.select_line
-                print "                  #",out.left_value.right_value.left_branch,"    ",out.left_value.right_value.right_branch
-                print "                               ",out.left_value.right_value.left_value,"     ",out.left_value.right_value.right_value
-            else:
-                print "",out.left_value.left_value,"          ",out.left_value.right_value
-        else:
-            print "  ",out.left_value
-
-        #print out.right_value
-
-        if(str(type(out.right_value)) == "<type 'instance'>"):
-            print "                                 ",out.right_value.select_line,"    "
-            print "                        ",out.right_value.left_branch,"     ",out.right_value.right_branch
-
-            if(str(type(out.right_value.left_value)) == "<type 'instance'>"):
-                print "            ",out.right_value.left_value.select_line,"                                          "
-                print "          ",out.right_value.left_value.left_branch,"    ",out.right_value.left_value.right_branch
-                print "        ",out.right_value.left_value.left_value,"             ",out.right_value.left_value.right_value
-                
-            else:
-                print "       ",out.right_value.left_value
-                
-            if str(type(out.right_value.right_value)) == "<type 'instance'>":
-                print "                                                           ",out.right_value.right_value.select_line
-                print "                                                  ",out.right_value.right_value.left_branch,"    ",out.right_value.right_value.right_branch
-                print "                                                ",out.right_value.right_value.left_value,"     ",out.right_value.right_value.right_value
-            else:
-                print "                                              ",out.right_value.right_value
-                
-            
-        else:
-            print "                                    ",out.right_value
-
-    except:
-        print out
-
-
 #print type(str())
 #outp = combinations_3_3_bdd((0,2,1),'B')
 #outp = combinations_3_3_bdd((0,2,1),'B')
@@ -236,14 +190,14 @@ def print_btTDD(node_graph):
 #print outpe.right_value
 #print type(str())
 #print str(type(outp.right_value)) == "<type 'instance'>"
-"""
+
 outp = combinations_3_3_bdd((0,0,1),'A')
 print outp.select_line
 print outp.left_branch
 print outp.right_branch
 print outp.left_value
 print outp.right_value
-"""
+
 
 #print len(mux_2_1_red)
 
