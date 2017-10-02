@@ -252,19 +252,26 @@ def is_instance(sub_node,cost_matrix):
 
 def is_string(str_inp,cost_matrix):
 
-    if str_inp.find('A') > 0:
-        i_cost_matrix= 0
-        #print "#"
-    elif str_inp.find('B') >0:
-        i_cost_matrix= 1
-        #print "$"
+    try:
 
-    if str_inp.find('NTI'):
-        cost_matrix[i_cost_matrix][2] = cost_matrix[i_cost_matrix][2]+1
-    elif str_inp.find('PTI'):
-        cost_matrix[i_cost_matrix][3] = cost_matrix[i_cost_matrix][3]+1
-    elif str_inp.find('INV'):
-        cost_matrix[i_cost_matrix][4] = cost_matrix[i_cost_matrix][4]+1
+        if str_inp.find('A') >=0:
+            i_cost_matrix= 0
+            #print "#"
+        elif str_inp.find('B') >=0:
+            i_cost_matrix= 1
+            #print "$"
+
+        if str_inp.find('NTI') >=0:
+            cost_matrix[i_cost_matrix][2] = cost_matrix[i_cost_matrix][2]+1
+        if str_inp.find('PTI') >=0:
+            cost_matrix[i_cost_matrix][3] = cost_matrix[i_cost_matrix][3]+1
+            #print "$#"
+        if str_inp.find('INV') >=0:
+            cost_matrix[i_cost_matrix][4] = cost_matrix[i_cost_matrix][4]+1
+    
+    except:
+        print ""
+
     
     return cost_matrix
 
@@ -297,8 +304,8 @@ def transistor_count(node_graph):
 
     cost_table = [[0,0,0,0,0],[0,0,0,0,0]] 
     
-    trans_count_val = [0,0,0,0,0]
-    total_transistor_count = 0
+    trans_count_val = [4,4,2,2,2]
+    
 
     if str(type(node_graph)) == "<type 'str'>" or str(type(node_graph)) == "<type 'int'>":
         cost_table = is_string(node_graph,cost_table)
@@ -323,10 +330,27 @@ def transistor_count(node_graph):
             if str(type(node_graph.left_value)) == "<type 'str'>":
                 if str(type(node_graph.left_value)) == 'PTI(B)':
         """
-         
-    
+    #cost_vector = 0
+    red_cost_table = copy.copy(cost_table)
 
-    return cost_table
+    for i in range(0,2):
+        if(cost_table[i][0] > 0):
+            if cost_table[i][2] == 0:
+                cost_table[i][2] = 1
+            else:
+                cost_table[i][2] = 1
+
+        if(cost_table[i][1] > 0):
+            if cost_table[i][1] == 0:
+                cost_table[i][3] = 1
+            else:
+                cost_table[i][3] = 1 
+
+    total_cost_vector = np.sum(red_cost_table,0)
+
+    total_transistor_count = trans_count_val[0] * total_cost_vector[0]+ trans_count_val[1] * total_cost_vector[1] +trans_count_val[2] * total_cost_vector[2]+trans_count_val[3] * total_cost_vector[3]+trans_count_val[4] * total_cost_vector[4]
+
+    return total_cost_vector,total_transistor_count,cost_table
         
 
 
