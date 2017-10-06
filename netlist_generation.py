@@ -25,7 +25,8 @@ def len_2(netlist_sub,key,element,out_sel):
         #determine if NTI or PTI
         ele_1 = element[0]
         ele_2 = element[1]
-        #print key,element
+        print "$$"
+        print key,element
         out_ele_1 = x.match(ele_1)
         out_ele_2 = x.match(ele_2)
         print ele_1,ele_2
@@ -72,7 +73,50 @@ def len_2(netlist_sub,key,element,out_sel):
                 else:
                         sel_line = out_sel
 
-                netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+                netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+        elif str.find(key,'Y')>=0:
+                print "%%%%%%"
+                start = str.find(key,'Y')
+                #print start
+                sel_line = "In_1"
+                if (ele_1[start:len(ele_1)] == '0' and ele_2[start:len(ele_2)] == '12') :
+                        print "NTI"
+                        netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+                if (ele_1[start:len(ele_1)] == '01' and ele_2[start:len(ele_2)] == '2') :
+                        print "PTI"
+                        netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+                if (ele_1[start:len(ele_1)] == '2' and ele_2[start:len(ele_2)] == '01') :
+                        print "PTI"
+                        netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
+                if (ele_1[start:len(ele_1)] == '12' and ele_2[start:len(ele_2)] == '0') :
+                        print "NTI"
+                        netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
+        elif str.find(key,'X')>=0:
+                print "^^^^^^^"
+                start = str.find(key,'X')
+                #print start
+                sel_line = "In_2"
+                if (ele_1[start:start+1] == '0' and ele_2[start:start+2] == '12') :
+                        print "NTI"
+                        netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+                if (ele_1[start:start+2] == '01' and ele_2[start:start+1] == '2') :
+                        print "PTI"
+                        netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+                if (ele_1[start:start+1] == '2' and ele_2[start:start+2] == '01') :
+                        print "PTI"
+                        netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
+                if (ele_1[start:start+2] == '12' and ele_2[start:start+1] == '0') :
+                        print "NTI"
+                        netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
 
         #print netlist_sub
         return netlist_sub        
@@ -84,6 +128,7 @@ def len_1():
 
 def list_recursion(netlist_sub,key,element,inp_sub,out_sel):
 
+        print "##"
         print key,element
 
         if(len(element) == 2):
@@ -101,8 +146,14 @@ def list_recursion(netlist_sub,key,element,inp_sub,out_sel):
                 
                 #print "####"
                 for i in range(len(temp_list)):
+                        #print type(element[0])
+
                         if (temp_list[i] == key):
-                                temp_list[i] = element[0]
+                                if str(type(element[0])) == "<type 'int'>":
+                                        temp_list[i] = str(element[0])
+                                else:
+                                        temp_list[i] = element[0]
+
 
                 #print "####"
                 netlist_sub =  " ".join(temp_list)
@@ -129,7 +180,9 @@ def sub_module(out_sub,inp_sub):
                         netlist_sub = list_recursion(netlist_sub,key,element,inp_sub,out_sel)
                         netlist_sub = netlist_sub.replace(key,out_sub)
                         print netlist_sub
-                        break;
+                        break
+
+        return netlist_sub
                         
 
 
@@ -144,13 +197,14 @@ def main(inp):
 
         #print len(inp)
         
-        sub_modules = []
+        sub_modules = {}
 
-        for key in inp:
-                #print key
-                sub_module(key,inp[key])
-                break
-
+        for key in ['F1_2_1']:
+                print key
+                out_net_submodule = sub_module(key,inp[key])
+                sub_modules[key] = out_net_submodule 
+                
+        print sub_modules
 
 
 
