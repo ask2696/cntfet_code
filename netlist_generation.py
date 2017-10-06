@@ -97,17 +97,17 @@ def list_recursion(netlist_sub,key,element,inp_sub,out_sel):
         elif (len(element) == 1):
                 #netlist_sub = len_1(netlist_sub,key,element)
                 temp_list = re.split(" ",netlist_sub)
-                netlist_sub = netlist_sub + key + " " + element[0] + "\n" 
+                #netlist_sub = netlist_sub + key + " " + element[0] + "\n" 
                 
-                print "####"
+                #print "####"
                 for i in range(len(temp_list)):
                         if (temp_list[i] == key):
                                 temp_list[i] = element[0]
 
-                print "####"
-                temp_list =  " ".join(temp_list)
-                print temp_list
-                print "$$$$"
+                #print "####"
+                netlist_sub =  " ".join(temp_list)
+                #print temp_list
+                #print "$$$$"
                 #netlist_sub = netlist_sub.replace(key,element[0]) 
 
         return netlist_sub
