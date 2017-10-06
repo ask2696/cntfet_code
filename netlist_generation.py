@@ -25,14 +25,14 @@ def len_2(netlist_sub,key,element,out_sel):
         #determine if NTI or PTI
         ele_1 = element[0]
         ele_2 = element[1]
-        print "$$"
-        print key,element
+        #$#print "$$"
+        #$#print key,element
         out_ele_1 = x.match(ele_1)
         out_ele_2 = x.match(ele_2)
-        print ele_1,ele_2
+        #$#print ele_1,ele_2
 
         if(out_ele_1.group(2) == '0' and out_ele_2.group(2) == '12'):
-                print "NTI"
+                #$#print "NTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -45,8 +45,8 @@ def len_2(netlist_sub,key,element,out_sel):
 
                 netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
-        if(out_ele_1.group(2) == '12' and out_ele_2.group(2) == '0'):
-                print "NTI"
+        elif(out_ele_1.group(2) == '12' and out_ele_2.group(2) == '0'):
+                #$#print "NTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -62,7 +62,7 @@ def len_2(netlist_sub,key,element,out_sel):
 
 
         elif(out_ele_1.group(2) == '2' and out_ele_2.group(2) =='01'):
-                print "PTI"
+                #$#print "PTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -76,7 +76,7 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         elif(out_ele_1.group(2) == '01' and out_ele_2.group(2) =='2'):
-                print "PTI"
+                #$#print "PTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -90,7 +90,7 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
         elif(out_ele_1.group(2) == '1' and out_ele_2.group(2) =='2'):
-                print "PTI"
+                #$#print "PTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -104,7 +104,7 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
         elif(out_ele_1.group(2) == '2' and out_ele_2.group(2) =='1'):
-                print "PTI"
+                #$#print "PTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -118,7 +118,7 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         elif(out_ele_1.group(2) == '0' and out_ele_2.group(2) =='1'):
-                print "NTI"
+                #$#print "NTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -132,7 +132,7 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
         elif(out_ele_1.group(2) == '1' and out_ele_2.group(2) =='0'):
-                print "NTI"
+                #$#print "NTI"
                 if str.find(ele_1,'X')>=0:
                         sel_line = "In_1"
                 elif str.find(ele_1,'Y')>=0:
@@ -146,60 +146,84 @@ def len_2(netlist_sub,key,element,out_sel):
                 netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         elif str.find(key,'Y')>=0:
-                print "%%%%%%"
+                #$#print "%%%%%%"
                 start = str.find(key,'Y')
                 #print start
                 sel_line = "In_1"
                 if (ele_1[start:len(ele_1)] == '0' and ele_2[start:len(ele_2)] == '12') :
-                        print "NTI"
+                        #$#print "NTI"
                         netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
                 if (ele_1[start:len(ele_1)] == '01' and ele_2[start:len(ele_2)] == '2') :
-                        print "PTI"
+                        #$#print "PTI"
                         netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
                 if (ele_1[start:len(ele_1)] == '2' and ele_2[start:len(ele_2)] == '01') :
-                        print "PTI"
+                        #$#print "PTI"
                         netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
                 if (ele_1[start:len(ele_1)] == '12' and ele_2[start:len(ele_2)] == '0') :
-                        print "NTI"
+                        #$#print "NTI"
                         netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         elif str.find(key,'X')>=0:
-                print "^^^^^^^"
+                #$#print "^^^^^^^"
                 start = str.find(key,'X')
                 #print start
                 sel_line = "In_2"
                 if (ele_1[start:start+1] == '0' and ele_2[start:start+2] == '12') :
-                        print "NTI"
+                        #$#print "NTI"
                         netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
                 if (ele_1[start:start+2] == '01' and ele_2[start:start+1] == '2') :
-                        print "PTI"
+                        #$#print "PTI"
                         netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
                 if (ele_1[start:start+1] == '2' and ele_2[start:start+2] == '01') :
-                        print "PTI"
+                        #$#print "PTI"
                         netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
                 if (ele_1[start:start+2] == '12' and ele_2[start:start+1] == '0') :
-                        print "NTI"
+                        #$#print "NTI"
                         netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+        else:
+                first_val = key[1]
+                last_val = key[len(key)-1]
 
+                if ((out_ele_1.group(2)[0] == first_val) and (out_ele_2.group(2)[0] == first_val)) :
+                        sel_line = "In_1"
+                        el1 =  out_ele_1.group(2)[len(out_ele_1.group(2))-1]
+                        el2 =  out_ele_2.group(2)[len(out_ele_2.group(2))-1]
+
+                elif (((out_ele_1.group(2)[len(out_ele_1.group(2))-1]) == last_val) and ((out_ele_2.group(2)[len(out_ele_2.group(2))-1]) == last_val) ):
+                        sel_line = "In_2"
+                        el1 =  out_ele_1.group(2)[0]
+                        el2 =  out_ele_2.group(2)[0]
+
+                #$#else:
+                        #$#print "****()"
+
+                if el1 == '0' and el2 == '1':
+                        netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+                if el1 == '1' and el2 == '0':
+                        netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+                if el1 == '1' and el2 == '2':
+                        netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+                if el1 == '2' and el2 == '1':
+                        netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         #print netlist_sub
         return netlist_sub        
  
 
 
-def len_1():
-        print ""
+#$#def len_1():
+        #$#print ""
 
 def list_recursion(netlist_sub,key,element,inp_sub,out_sel):
 
-        print "##"
-        print key,element
+        #$#print "##"
+        #$#print key,element
 
         if(len(element) == 2):
                 netlist_sub = len_2(netlist_sub,key,element,out_sel)
@@ -237,7 +261,7 @@ def sub_module(out_sub,inp_sub):
 
         out_var = re.split('_',out_sub)
         out_sel = 'In'+out_var[1]
-        print out_sel
+        #$#print out_sel
         key_vals = ['FXY','F'+out_sel]
         no_lines = len(inp_sub)
         netlist_sub = ""
@@ -245,11 +269,11 @@ def sub_module(out_sub,inp_sub):
         for key in inp_sub:
                 if key in key_vals:
                         #start recursion
-                        print key
+                        #$#print key
                         element = inp_sub[key]
                         netlist_sub = list_recursion(netlist_sub,key,element,inp_sub,out_sel)
                         netlist_sub = netlist_sub.replace(key,out_sub)
-                        print netlist_sub
+                        #$#print netlist_sub
                         break
 
         return netlist_sub
@@ -266,15 +290,19 @@ def main(inp):
         #print inp
 
         #print len(inp)
-        
+        master_netlist = ""
         sub_modules = {}
 
-        for key in ['F1_2_1']:
+        for key in inp:
                 print key
                 out_net_submodule = sub_module(key,inp[key])
                 sub_modules[key] = out_net_submodule 
+                master_netlist = master_netlist + out_net_submodule
                 
-        print sub_modules
+        #print sub_modules
+        print "#############"
+        print master_netlist
+        print "#############"
 
 
 
@@ -283,7 +311,13 @@ def main(inp):
 
 
 if __name__ == "__main__":
-        inp = {'F0_2_0': {'F00': [0],
+        inp = {'F0_2_0': {'FXY': [0]},
+ 'F0_2_1': {'F012': [0],
+  'F22': [1],
+  'FX01': [0],
+  'FX2': ['F012', 'F22'],
+  'FXY': ['FX01', 'FX2']},
+ 'F0_2_2': {'F00': [0],
   'F0Y': ['F00'],
   'F101': [0],
   'F12': [1],
@@ -293,7 +327,36 @@ if __name__ == "__main__":
   'F212': [1],
   'F2Y': ['F20', 'F212'],
   'FXY': ['F0Y', 'F12Y']},
- 'F0_2_1': {'F001': [0],
+ 'F0_3_0': {'FIn3': ['F0_2_0']},
+ 'F0_3_1': {'F01': ['F0_2_0'], 'F2': ['F0_2_1'], 'FIn3': ['F01', 'F2']},
+ 'F0_3_2': {'F0': ['F0_2_0'],
+  'F1': ['F0_2_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F0_2_2'],
+  'FIn3': ['F0', 'F12']},
+ 'F0_4_0': {'FIn4': ['F0_3_0']},
+ 'F0_4_1': {'F01': ['F0_3_0'], 'F2': ['F0_3_1'], 'FIn4': ['F01', 'F2']},
+ 'F0_4_2': {'F0': ['F0_3_0'],
+  'F1': ['F0_3_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F0_3_2'],
+  'FIn4': ['F0', 'F12']},
+ 'F0_5_0': {'F0': ['F0_4_0'],
+  'F1': ['F0_4_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F0_4_2'],
+  'FIn5': ['F0', 'F12']},
+ 'F1_2_0': {'F00': [0],
+  'F0Y': ['F00'],
+  'F101': [0],
+  'F12': [1],
+  'F12Y': ['F1Y', 'F2Y'],
+  'F1Y': ['F101', 'F12'],
+  'F20': [0],
+  'F212': [1],
+  'F2Y': ['F20', 'F212'],
+  'FXY': ['F0Y', 'F12Y']},
+ 'F1_2_1': {'F001': [0],
   'F01Y': ['F0Y', 'F1Y'],
   'F02': [1],
   'F0Y': ['F001', 'F02'],
@@ -304,7 +367,7 @@ if __name__ == "__main__":
   'F22': [1],
   'F2Y': ['F22'],
   'FXY': ['F01Y', 'F2Y']},
- 'F0_2_2': {'F00': [0],
+ 'F1_2_2': {'F00': [0],
   'F0112': [1],
   'F120': [1],
   'F21': [1],
@@ -313,12 +376,87 @@ if __name__ == "__main__":
   'FX0': ['F00', 'F120'],
   'FX12': ['F0112', 'F212'],
   'FXY': ['FX0', 'FX12']},
- 'F0_3_0': {'F0': ['F0_2_0'],
-  'F1': ['F0_2_1'],
+ 'F1_2_3': {'F00': [1],
+  'F0Y': ['F00'],
+  'F101': [1],
+  'F12': [2],
+  'F12Y': ['F1Y', 'F2Y'],
+  'F1Y': ['F101', 'F12'],
+  'F20': [1],
+  'F212': [2],
+  'F2Y': ['F20', 'F212'],
+  'FXY': ['F0Y', 'F12Y']},
+ 'F1_2_4': {'F001': [1],
+  'F01Y': ['F0Y', 'F1Y'],
+  'F02': [2],
+  'F0Y': ['F001', 'F02'],
+  'F10': [1],
+  'F112': [2],
+  'F12': [2],
+  'F1Y': ['F10', 'F112'],
+  'F22': [2],
+  'F2Y': ['F22'],
+  'FXY': ['F01Y', 'F2Y']},
+ 'F1_2_5': {'F00': [1],
+  'F010': ['F00', 'F10'],
+  'F0112': [2],
+  'F01Y': ['F010', 'F0112'],
+  'F10': [2],
+  'F2Y': ['PTIY'],
+  'FXY': ['F01Y', 'F2Y']},
+ 'F1_2_6': {'F0101': [2],
+  'F012': ['F02', 'F12'],
+  'F01Y': ['F0101', 'F012'],
+  'F02': [2],
+  'F12': [0],
+  'F2Y': ['NTIY'],
+  'FXY': ['F01Y', 'F2Y']},
+ 'F1_3_0': {'F0': ['F1_2_0'],
+  'F1': ['F1_2_1'],
   'F12': ['F1', 'F2'],
-  'F2': ['F0_2_2'],
+  'F2': ['F1_2_2'],
   'FIn3': ['F0', 'F12']},
- 'F1_2_0': {'F0Y': ['Y'],
+ 'F1_3_1': {'F0': ['F1_2_1'],
+  'F1': ['F1_2_2'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_2_3'],
+  'FIn3': ['F0', 'F12']},
+ 'F1_3_2': {'F0': ['F1_2_2'],
+  'F1': ['F1_2_3'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_2_4'],
+  'FIn3': ['F0', 'F12']},
+ 'F1_3_3': {'F0': ['F1_2_3'],
+  'F1': ['F1_2_4'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_2_5'],
+  'FIn3': ['F0', 'F12']},
+ 'F1_3_4': {'F0': ['F1_2_4'],
+  'F1': ['F1_2_5'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_2_6'],
+  'FIn3': ['F0', 'F12']},
+ 'F1_4_0': {'F0': ['F1_3_0'],
+  'F1': ['F1_3_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_3_2'],
+  'FIn4': ['F0', 'F12']},
+ 'F1_4_1': {'F0': ['F1_3_1'],
+  'F1': ['F1_3_2'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_3_3'],
+  'FIn4': ['F0', 'F12']},
+ 'F1_4_2': {'F0': ['F1_3_2'],
+  'F1': ['F1_3_3'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_3_4'],
+  'FIn4': ['F0', 'F12']},
+ 'F1_5_0': {'F0': ['F1_4_0'],
+  'F1': ['F1_4_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F1_4_2'],
+  'FIn5': ['F0', 'F12']},
+ 'F2_2_0': {'F0Y': ['Y'],
   'F10': [1],
   'F112': ['PTIY'],
   'F12Y': ['F1Y', 'F2Y'],
@@ -327,7 +465,7 @@ if __name__ == "__main__":
   'F22': [1],
   'F2Y': ['F201', 'F22'],
   'FXY': ['F0Y', 'F12Y']},
- 'F1_2_1': {'F00': [1],
+ 'F2_2_1': {'F00': [1],
   'F012': ['PTIY'],
   'F01Y': ['F0Y', 'F1Y'],
   'F0Y': ['F00', 'F012'],
@@ -336,7 +474,7 @@ if __name__ == "__main__":
   'F1Y': ['F101', 'F12'],
   'F2Y': ['Y'],
   'FXY': ['F01Y', 'F2Y']},
- 'F1_2_2': {'F010': ['NTIX'],
+ 'F2_2_2': {'F010': ['NTIX'],
   'F02': [1],
   'F122': ['PTIX'],
   'F20': [1],
@@ -345,9 +483,39 @@ if __name__ == "__main__":
   'FX12': ['FX1', 'FX2'],
   'FX2': ['F02', 'F122'],
   'FXY': ['FX0', 'FX12']},
- 'F1_3_0': {'F0': ['F1_2_0'],
-  'F1': ['F1_2_1'],
+ 'F2_3_0': {'F0': ['F2_2_0'],
+  'F1': ['F2_2_1'],
   'F12': ['F1', 'F2'],
-  'F2': ['F1_2_2'],
-  'FIn3': ['F0', 'F12']}}
+  'F2': ['F2_2_2'],
+  'FIn3': ['F0', 'F12']},
+ 'F2_3_1': {'F0': ['F2_2_1'],
+  'F1': ['F2_2_2'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_2_0'],
+  'FIn3': ['F0', 'F12']},
+ 'F2_3_2': {'F0': ['F2_2_2'],
+  'F1': ['F2_2_0'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_2_1'],
+  'FIn3': ['F0', 'F12']},
+ 'F2_4_0': {'F0': ['F2_3_0'],
+  'F1': ['F2_3_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_3_2'],
+  'FIn4': ['F0', 'F12']},
+ 'F2_4_1': {'F0': ['F2_3_1'],
+  'F1': ['F2_3_2'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_3_0'],
+  'FIn4': ['F0', 'F12']},
+ 'F2_4_2': {'F0': ['F2_3_2'],
+  'F1': ['F2_3_0'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_3_1'],
+  'FIn4': ['F0', 'F12']},
+ 'F2_5_0': {'F0': ['F2_4_0'],
+  'F1': ['F2_4_1'],
+  'F12': ['F1', 'F2'],
+  'F2': ['F2_4_2'],
+  'FIn5': ['F0', 'F12']}}
         main(inp)
