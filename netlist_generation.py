@@ -45,6 +45,20 @@ def len_2(netlist_sub,key,element,out_sel):
 
                 netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
 
+        if(out_ele_1.group(2) == '12' and out_ele_2.group(2) == '0'):
+                print "NTI"
+                if str.find(ele_1,'X')>=0:
+                        sel_line = "In_1"
+                elif str.find(ele_1,'Y')>=0:
+                        sel_line = "In_2"
+                #elif str.find(key,'F') >=0:
+                #        index = str.find(key,'F')
+                #        sel_line = key[index+1:len(key)]
+                else:
+                        sel_line = out_sel
+
+                netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
 
 
         elif(out_ele_1.group(2) == '2' and out_ele_2.group(2) =='01'):
@@ -61,6 +75,20 @@ def len_2(netlist_sub,key,element,out_sel):
 
                 netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
+        elif(out_ele_1.group(2) == '01' and out_ele_2.group(2) =='2'):
+                print "PTI"
+                if str.find(ele_1,'X')>=0:
+                        sel_line = "In_1"
+                elif str.find(ele_1,'Y')>=0:
+                        sel_line = "In_2"
+                #elif str.find(key,'F') >=0:
+                #        index = str.find(key,'F')
+                #        sel_line = key[index+1:len(key)]
+                else:
+                        sel_line = out_sel
+
+                netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
         elif(out_ele_1.group(2) == '1' and out_ele_2.group(2) =='2'):
                 print "PTI"
                 if str.find(ele_1,'X')>=0:
@@ -74,6 +102,48 @@ def len_2(netlist_sub,key,element,out_sel):
                         sel_line = out_sel
 
                 netlist_sub = PTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+        elif(out_ele_1.group(2) == '2' and out_ele_2.group(2) =='1'):
+                print "PTI"
+                if str.find(ele_1,'X')>=0:
+                        sel_line = "In_1"
+                elif str.find(ele_1,'Y')>=0:
+                        sel_line = "In_2"
+                #elif str.find(key,'F') >=0:
+                #        index = str.find(key,'F')
+                #        sel_line = key[index+1:len(key)]
+                else:
+                        sel_line = out_sel
+
+                netlist_sub = PTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
+
+        elif(out_ele_1.group(2) == '0' and out_ele_2.group(2) =='1'):
+                print "NTI"
+                if str.find(ele_1,'X')>=0:
+                        sel_line = "In_1"
+                elif str.find(ele_1,'Y')>=0:
+                        sel_line = "In_2"
+                #elif str.find(key,'F') >=0:
+                #        index = str.find(key,'F')
+                #        sel_line = key[index+1:len(key)]
+                else:
+                        sel_line = out_sel
+
+                netlist_sub = NTI_module(netlist_sub,ele_2,ele_1,key,sel_line)
+
+        elif(out_ele_1.group(2) == '1' and out_ele_2.group(2) =='0'):
+                print "NTI"
+                if str.find(ele_1,'X')>=0:
+                        sel_line = "In_1"
+                elif str.find(ele_1,'Y')>=0:
+                        sel_line = "In_2"
+                #elif str.find(key,'F') >=0:
+                #        index = str.find(key,'F')
+                #        sel_line = key[index+1:len(key)]
+                else:
+                        sel_line = out_sel
+
+                netlist_sub = NTI_module(netlist_sub,ele_1,ele_2,key,sel_line)
 
         elif str.find(key,'Y')>=0:
                 print "%%%%%%"
