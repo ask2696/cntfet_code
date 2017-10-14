@@ -267,7 +267,7 @@ def is_string(str_inp,cost_matrix):
             cost_matrix[i_cost_matrix][3] = cost_matrix[i_cost_matrix][3]+1
             #print "$#"
         if str_inp.find('INV') >=0:
-            cost_matrix[i_cost_matrix][4] = cost_matrix[i_cost_matrix][4]+1
+            cost_matrix[i_cost_matrix][4] = cost_matrix[i_cost_matrix][z4]+1
     
     except:
         print ""

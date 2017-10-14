@@ -10,9 +10,17 @@ from libraries_btTDD import *
 
 #truth_table = np.array([[0,1,2],[0,1,2],[0,1,2]])
 
-truth_table = np.array([[0,1,2],[1,2,0],[1,2,0]])
+#truth_table = np.array([[0,1,2],[1,2,0],[1,2,0]])
 
 #truth_table = np.array([[1,1,1],[1,1,1],[1,1,1]])
+
+## FA1 Sum: 24 + 12 = 36,
+#truth_table = np.array([[0,1,2],[1,2,0],[2,0,1]])
+#truth_table = np.array([[1,2,0],[2,0,1],[0,1,2]])
+#C0
+#truth_table = np.array([[0,0,0],[0,0,0],[0,1,1]])
+#truth_table = np.array([[0,0,1],[0,1,1],[1,1,1]])
+truth_table = np.array([[0,1,1],[1,1,1],[1,1,2]])
 
 print "Truth Table"
 print "   0  1  2"

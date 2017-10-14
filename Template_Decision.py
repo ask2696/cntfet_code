@@ -162,7 +162,7 @@ def decision_template(truth_table):
                     row_2mux[i][1] = remnant_rows[1]
                     cost_row[i] = (1,1,0,0)
                     new_mapping_row_case2[i][0] = True
-                    new_mapping_row_case2[i][1] = node('X',(2),(0,1),row[si][2],"ROW"+str(remnant_rows[1]))
+                    new_mapping_row_case2[i][1] = node('X',(2),(0,1),rows[i][2],"ROW"+str(remnant_rows[1]))
 
 
                 if (((rows[remnant_rows[0]] == NTI_map1).all()) or ((rows[remnant_rows[0]] == NTI_map2).all())):
