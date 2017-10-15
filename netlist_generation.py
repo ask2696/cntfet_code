@@ -390,7 +390,7 @@ def main(inp):
                   elif(temp_out[i] in ['0','1','2']):
                     temp_out[i] = map_signal[temp_out[i]]
                   elif(temp_out[i] == 'X'):
-                    temp_out[i] = 'In_2'
+                    temp_out[i] = 'In2'
                   elif(temp_out[i] == 'Y'):
                     temp_out[i] = 'In1'
                   
@@ -415,7 +415,7 @@ def main(inp):
                     temp_out[i] = temp_out[i].replace('B','')
 
                   else:
-                    temp_out[i] = str(sub_modules_num) + temp_out[i]
+                    temp_out[i] = "M"+str(sub_modules_num) + temp_out[i]
                 if len(temp_out) == 1:
                   #print final_val(inp[key])
                   replace_item = final_val(inp[key])[0]
@@ -478,13 +478,19 @@ def main(inp):
 
 
 if __name__ == "__main__":
-  dir_loc = "./netlist/"
+
   files = ["Test_3_2_In.txt","Test_5_3_withIn.txt"]
-  file_read = open(dir_loc+files[1],'r')
+  filename = ["net_3_2.txt","net_5_3.txt"]
+  print files
+  print filename
+  index = input("Enter the index \n")
+  dir_loc = "./netlist/"
+  #files = ["Test_3_2_In.txt","Test_5_3_withIn.txt"]
+  file_read = open(dir_loc+files[index],'r')
   inp = file_read.read()
   inp = ast.literal_eval(inp)
   #print type(inp)
   out_netlist = main(inp)
-  filename = "./netlist/net_5_3.txt"
-  file = open(filename,"w")
+  #filename = ["net_3_2.txt","net_5_3.txt"]
+  file = open(dir_loc+filename[index],"w")
   file.write(out_netlist)
