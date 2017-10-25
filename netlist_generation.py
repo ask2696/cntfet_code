@@ -368,11 +368,13 @@ def main(inp):
         
         global sub_modules_num
         global replace_val
+        global module_no
+        add_binary = ""
 
         for key in inp:
                 print key
                 out_net_submodule = sub_module(key,inp[key])
-
+                add_binary = ""
                #print sub_modules_num
                 #print "$$$$$$$$$$$"
                 #print out_net_submodule
@@ -400,19 +402,86 @@ def main(inp):
                     #print temp_out[i]
                   elif(temp_out[i] == 'NTIY') or (temp_out[i] == 'PTIY'):
                     temp_out[i] = temp_out[i].replace('Y','_In1')
-                  elif(temp_out[i] == 'NTIYB') or (temp_out[i] == 'PTIYB'):
-                    temp_out[i] = temp_out[i].replace('Y','_In1')
-                  elif(temp_out[i] == 'NTIYB') or (temp_out[i] == 'PTIYB'):
+
+                  elif(temp_out[i] == 'NTIYB'):
+
+                    print "$"
+                    temp_out[i] = temp_out[i].replace('B','')
                     temp_out[i] = temp_out[i].replace('Y','_In1')
                     temp_out[i] = temp_out[i].replace('N','B_N')
-                    temp_out[i] = temp_out[i].replace('P','B_P')
-                    temp_out[i] = temp_out[i].replace('B','')
+                    #temp_out[i] = temp_out[i].replace('P','B_P')
+                    print out_net_submodule 
+                    print signals_gen
+                    print module_no
 
-                  elif(temp_out[i] == 'NTIXB') or (temp_out[i] == 'PTIXB'):
+                    if ("B_NTI_In1" not in signals_gen):
+                      print "^"
+                      #.subckt BIN_INV VIN VOUT
+                      if("NTI_In1" not in signals_gen):
+                        add_binary = "XU"+str(module_no)+" "+"In1"+" "+"NTI_"+"In1"+" "+"nti_gate"+"\n"
+                        module_no = module_no +1
+                        signals_gen.append("NTI_In1")
+
+                      signals_gen.append("B_NTI_In1")
+                      add_binary = add_binary + "XU"+str(module_no)+" "+"NTI_In1"+" "+"B_NTI_In1"+" BIN_INV"+"\n"
+                      module_no = module_no +1
+
+                  elif (temp_out[i] == 'PTIYB'):
+
+                    temp_out[i] = temp_out[i].replace('B','')
+                    temp_out[i] = temp_out[i].replace('Y','_In1')
+                    #temp_out[i] = temp_out[i].replace('N','B_N')
+                    temp_out[i] = temp_out[i].replace('P','B_P')
+
+                    if ("B_PTI_In1" not in signals_gen):
+                      #.subckt BIN_INV VIN VOUT
+                      if("PTI_In1" not in signals_gen):
+                        add_binary = "XU"+str(module_no)+" "+"In1"+" "+"PTI_"+"In1"+" "+"pti_gate"+"\n"
+                        module_no = module_no +1
+                        signals_gen.append("PTI_In1")
+
+                      signals_gen.append("B_PTI_In1")
+                      add_binary = add_binary + "XU"+str(module_no)+" "+"PTI_In1"+" "+"B_PTI_In1"+" BIN_INV"+"\n"
+                      module_no = module_no +1
+                    
+
+                  elif(temp_out[i] == 'NTIXB'):
+                    print "%"                 
+
+                    temp_out[i] = temp_out[i].replace('B','')
                     temp_out[i] = temp_out[i].replace('X','_In2')
                     temp_out[i] = temp_out[i].replace('N','B_N')
-                    temp_out[i] = temp_out[i].replace('P','B_P')
+                    #temp_out[i] = temp_out[i].replace('P','B_P')
+
+                    if ("B_NTI_In2" not in signals_gen):
+                      #.subckt BIN_INV VIN VOUT
+                      if("NTI_In2" not in signals_gen):
+                        add_binary = "XU"+str(module_no)+" "+"In2"+" "+"NTI_"+"In2"+" "+"nti_gate"+"\n"
+                        module_no = module_no +1
+                        signals_gen.append("NTI_In2")
+
+                      signals_gen.append("B_NTI_In2")
+                      add_binary = add_binary + "XU"+str(module_no)+" "+"NTI_In2"+" "+"B_NTI_In2"+" BIN_INV"+"\n"
+                      module_no = module_no +1
+                  
+                  elif(temp_out[i] == 'PTIXB'):
+
                     temp_out[i] = temp_out[i].replace('B','')
+                    temp_out[i] = temp_out[i].replace('X','_In2')
+                    #temp_out[i] = temp_out[i].replace('N','B_N')
+                    temp_out[i] = temp_out[i].replace('P','B_P')
+
+                    if ("B_PTI_In2" not in signals_gen):
+                      #.subckt BIN_INV VIN VOUT
+                      if("PTI_In2" not in signals_gen):
+                        add_binary = "XU"+str(module_no)+" "+Sel+" "+"PTI_"+Sel+" "+"pti_gate"+"\n"
+                        module_no = module_no +1
+                        signals_gen.append("PTI_In2")
+
+                      signals_gen.append("B_PTI_In2")
+                      add_binary = add_binary + "XU"+str(module_no)+" "+"PTI_In2"+" "+"B_PTI_In2"+" BIN_INV"+"\n"
+                      module_no = module_no +1
+
 
                   else:
                     temp_out[i] = "M"+str(sub_modules_num) + temp_out[i]
@@ -432,7 +501,8 @@ def main(inp):
                 #print temp_out
                 #print "$$$$$$$$$$$"
                 sub_modules_num = sub_modules_num +1
-                sub_modules[key] = out_net_submodule 
+                out_net_submodule = out_net_submodule + add_binary
+                sub_modules[key] = out_net_submodule
                 master_netlist = master_netlist + out_net_submodule
         
         #replace_values
@@ -479,8 +549,8 @@ def main(inp):
 
 if __name__ == "__main__":
 
-  files = ["Test_3_2_In.txt","Test_5_3_withIn.txt"]
-  filename = ["net_3_2.txt","net_5_3.txt"]
+  files = ["Test_3_2_In.txt","Test_5_3_withIn.txt","Test_Product_5_3_withIn.txt","random.txt","8_3_sum.txt"]
+  filename = ["net_3_2.txt","net_5_3.txt","net_Product_5_3_.txt","net_random.txt","net_8_3_sum.txt"]
   print files
   print filename
   index = input("Enter the index \n")
