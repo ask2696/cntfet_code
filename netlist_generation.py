@@ -549,8 +549,8 @@ def main(inp):
 
 if __name__ == "__main__":
 
-  files = ["Test_3_2_In.txt","Test_5_3_withIn.txt","Test_Product_5_3_withIn.txt","random.txt","8_3_sum.txt"]
-  filename = ["net_3_2.txt","net_5_3.txt","net_Product_5_3_.txt","net_random.txt","net_8_3_sum.txt"]
+  files = ["Test_3_2_In.txt","Test_5_3_withIn.txt","Test_Product_5_3_withIn.txt","random.txt","8_3_sum.txt","sum_9_3.txt"]
+  filename = ["net_3_2.txt","net_5_3.txt","net_Product_5_3_.txt","net_random.txt","net_8_3_sum.txt","net_sum_9_3.txt"]
   print files
   print filename
   index = input("Enter the index \n")

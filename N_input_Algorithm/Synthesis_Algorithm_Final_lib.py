@@ -746,6 +746,11 @@ def in_args(fun,outputs,inputs,terms):
     #outputs=2;
     #terms=5;
     """
+    if(fun==4):
+        outputs=1
+        #terms = input("Enter the number of terms in each product of cyclic function:")
+        terms = int(terms)
+
     outputsh=(int(outputs/2))
 
     #Generate Combinations
